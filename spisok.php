@@ -1,3 +1,13 @@
+<?php
+require_once 'script.php';
+
+// 1. Создаем объект нашего класса
+$db = new Database();
+
+// 2. Вызываем метод получения всех фильмов и записываем их в переменную $items
+$items = $db->getAllMovies();
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,7 +30,7 @@
 <img class="info-group" src="img/image-99.png" />
 <div class="text-wrapper-8" > <a href="index.html">ГЛАВНАЯ</a></div>
 <div class="text-wrapper-9" > <a href="spisok.html">СПИСОК</a></div>
-<div class="text-wrapper-10" > <a href= "forma.html">ФОРМА</a></div>
+<div class="text-wrapper-10" > <a href= "forma.php">ФОРМА</a></div>
 <div class="text-wrapper-11" > <a href= "info-base.html">ИНФО</a></div>
 <div class="rectangle-7" ></div>
 <div class="titr-2" ><div class="rectangle-5" ></div>
@@ -41,7 +51,7 @@
 // footer
 <footer class="footer3" ><div class="rectangle-4" ></div>
 <div class="base-nav" ><div class="base-nav-2" >Навигация</div>
-<p class="nav-li" ><span class="span" >&nbsp;&nbsp;<a href="index.html">Главная</a><br/>&nbsp;&nbsp;<a href="spisok.html">Список</a><br/>&nbsp;&nbsp;<a href= "forma.html">Форма</a><br/></span>
+<p class="nav-li" ><span class="span" >&nbsp;&nbsp;<a href="index.html">Главная</a><br/>&nbsp;&nbsp;<a href="spisok.html">Список</a><br/>&nbsp;&nbsp;<a href= "forma.php">Форма</a><br/></span>
 <span class="text-wrapper-3" >&nbsp;&nbsp;</span>
 <span class="span" ><a href= "info-base.html">Инфо</a></span></p></div>
 <div class="titr" ><div class="rectangle-5" ></div>
@@ -51,6 +61,10 @@
 <span class="text-wrapper-5" >kazakofftema7@</span></p></div>
 <div class="text-wrapper-6" >Товарищество<br/>Исследователей<br/>Творческого Ретро</div>
 <div class="text-wrapper-7" >2026 год</div></footer>
+
+<script>
+    const items = <?php echo json_encode($items ?? [], JSON_UNESCAPED_UNICODE); ?>;
+</script>
 
 <script src="script.js"></script>
 

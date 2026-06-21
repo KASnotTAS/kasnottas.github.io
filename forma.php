@@ -1,3 +1,30 @@
+<?php
+require_once 'script.php';
+
+$message = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $title = trim($_POST['name']);
+    $description = trim($_POST['description']);
+    $director = trim($_POST['director']);
+    $year = empty($_POST['year']) ? null : (int)$_POST['year']; // если делать через трим как и остальные, то при пустоте в БД ничего не добавляется
+
+    try {
+        $db = new Database();
+
+        if ($db->addMovie($title, $description, $director, $year)) {
+            $message = "Фильм успешно добавлен!";
+        } else {
+            $message = "Ошибка при сохранении.";
+        }
+
+    } catch (Exception $e) {
+        $message = "Ошибка: " . $e->getMessage();
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -19,8 +46,8 @@
 <img class="forma-group" src="img/image-99.png" />
 <img class="info-group" src="img/image-99.png" />
 <div class="text-wrapper-8" > <a href="index.html">ГЛАВНАЯ</a></div>
-<div class="text-wrapper-9" > <a href="spisok.html">СПИСОК</a></div>
-<div class="text-wrapper-10" > <a href= "forma.html">ФОРМА</a></div>
+<div class="text-wrapper-9" > <a href="spisok.php">СПИСОК</a></div>
+<div class="text-wrapper-10" > <a href= "forma.php">ФОРМА</a></div>
 <div class="text-wrapper-11" > <a href= "info-base.html">ИНФО</a></div>
 <div class="rectangle-7" ></div>
 <div class="titr-2" ><div class="rectangle-5" ></div>
@@ -34,7 +61,7 @@
     <div class="display-4" >Форма</div></div>
     <div class="lead-text-2" ><p class="vivamus-sagittis-lac" >Ниже приведена форма обратной связи, через которую Вы можете предложить фильм для списка. Ограничение - предложенный вариант должен быть именно фильмом (в том числе многосерийным) и быть выпущенным во времена существования СССР.</p></div>
 
-    <form method="POST">
+    <form method="POST" action="forma.php">
 
         <div class="mb-3">
             <label for="name" class="form-label">Название фильма</label>
@@ -50,8 +77,7 @@
             <textarea class="form-control"
                       id="description"
                       name="description"
-                      rows="4"
-                      required></textarea>
+                      rows="4"></textarea>
         </div>
 
                 <div class="mb-3">
@@ -59,8 +85,7 @@
             <input type="text"
                    class="form-control"
                    id="director"
-                   name="director"
-                   required>
+                   name="director">
         </div>
 
                 <div class="mb-3">
@@ -68,8 +93,7 @@
             <input type="text"
                    class="form-control"
                    id="year"
-                   name="year"
-                   required>
+                   name="year">
         </div>
 
         <button type="submit" class="btn btn-primary">
@@ -86,7 +110,7 @@
 // footer
 <footer class="footer" ><div class="rectangle-4" ></div>
 <div class="base-nav" ><div class="base-nav-2" >Навигация</div>
-<p class="nav-li" ><span class="span" >&nbsp;&nbsp;<a href="index.html">Главная</a><br/>&nbsp;&nbsp;<a href="spisok.html">Список</a><br/>&nbsp;&nbsp;<a href= "forma.html">Форма</a><br/></span>
+<p class="nav-li" ><span class="span" >&nbsp;&nbsp;<a href="index.html">Главная</a><br/>&nbsp;&nbsp;<a href="spisok.php">Список</a><br/>&nbsp;&nbsp;<a href= "forma.php">Форма</a><br/></span>
 <span class="text-wrapper-3" >&nbsp;&nbsp;</span>
 <span class="span" ><a href= "info-base.html">Инфо</a></span></p></div>
 <div class="titr" ><div class="rectangle-5" ></div>
